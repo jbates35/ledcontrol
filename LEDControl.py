@@ -3,8 +3,8 @@ import time
 
 class LEDControl:
     
-    MODEMAX = 3
-    DIMMAX = 9
+    PATTERN_MAX = 3
+    DIM_MAX = 9
     SPEEDMAX = 2
     COLORMAX = 6
     
@@ -13,12 +13,12 @@ class LEDControl:
     BLU = 2
 
     def __init__(self):
-        self.mode = 0
+        self.pattern = 0
         self.speed = 0
         self.color = 0
         self.dim = 5
         self.led = [0, 0, 0]
-        self.switchflag = 0
+        self.switch_flag = 0
 
     def fadeup(self):
         for i in range(len(self.led)):
@@ -29,45 +29,24 @@ class LEDControl:
 
 
     ########### CONTROL FUNCTIONS ###########
-    def changemode(dir):
-        if dir == 1:
-            self.mode += 1
-            if self.mode > LEDControl.MODEMAX:
-                self.mode = 0
-        else:
-            self.mode -= 1
-            if self.mode < 0:
-                self.mode = LEDControl.MODEMAX
+    def changeval(self, x, max, dir):
+    if dir == 1:
+        return x+1 if x < max else 0
+    else:
+        return x-1 if x > 0 else max
     
-    def changespeed(dir):
-        if dir == 1:
-            self.speed += 1
-            if self.speed > LEDControl.SPEEDMAX:
-                self.speed = 0
-        else:
-            self.speed -= 1
-            if self.speed < 0:
-                self.speed = LEDControl.SPEEDMAX
     
-    def changedim(dir):
-        if dir == 1:
-            self.dim += 1
-            if self.dim > LEDControl.DIMMAX:
-                self.dim = 0
-        else:
-            self.dim -= 1
-            if self.dim < 0:
-                self.dim = LEDControl.DIMMAX
+    def changemode(self, dir):
+        self.changeval(self.mode, LEDControl.MODEMAX, dir)
+    
+    def changespeed(self, dir):
+        self.changeval(self.speed, LEDControl.SPEEDMAX, dir)
+    
+    def changedim(self, dir):
+        self.changeval(self.dim, LEDControl.DIMMAX, dir)
                 
-    def changecolor(dir):
-        if dir == 1:
-            self.color += 1
-            if self.color > LEDControl.COLORMAX:
-                self.color = 0
-        else:
-            self.color -= 1
-            if self.color < 0:
-                self.color = LEDControl.COLORMAX
+    def changecolor(self, dir):
+        self.changeval(self.color, LEDControl.COLORMAX, dir)
             
                 
         
